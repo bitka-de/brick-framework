@@ -16,7 +16,16 @@ Brick ist ein kleines, schnelles und einfach zu bedienendes PHP-Framework für k
 
 Brick eignet sich besonders für Entwickler, die Übersichtlichkeit, Effizienz und moderne PHP-Standards schätzen.
 
-## 🚀 Schnellstart
+## � Dokumentation
+
+**Vollständige Dokumentation:** [docs/README.md](docs/README.md)
+
+### 📖 Wichtige Dokumente:
+- 🧪 [Test-Suite Übersicht](docs/TEST_SUITE_OVERVIEW.md) - 91 Tests, 213 Assertions
+- 🔀 [Router-Verbesserungen](docs/ROUTER_ENHANCEMENT_SUMMARY.md) - Enhanced routing system
+- 🏗️ [Architektur & Komponenten](docs/README.md#architecture) - System overview
+
+## �🚀 Schnellstart
 
 ### Installation
 
@@ -31,15 +40,15 @@ Brick eignet sich besonders für Entwickler, die Übersichtlichkeit, Effizienz u
     composer install
     ```
 
-3. **Development Server starten:**
+3. **Tests ausführen:**
+    ```bash
+    php tests/brick-test-runner.php
+    ```
+
+4. **Development Server starten:**
     ```bash
     ./cli/brick-cli.sh
     # Wähle Option 5: "Start Development Server"
-    ```
-
-4. **Framework testen:**
-    ```bash
-    php cli/brick:test
     ```
 
 ### Projektstruktur – Brick-Framework v1.0
