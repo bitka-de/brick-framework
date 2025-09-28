@@ -26,7 +26,6 @@ yarn.lock
 .phpunit.result.cache
 /tests/reports/
 /tests/coverage/
-phpunit.xml
 
 # Test Coverage
 clover.xml
