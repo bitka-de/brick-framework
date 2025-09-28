@@ -18,12 +18,28 @@ class ResponseTest extends TestCase
     protected function setUp(): void
     {
         $this->response = new Response();
+        
+        // Clean output buffer to prevent risky test warnings
+        if (ob_get_level()) {
+            ob_clean();
+        }
+        ob_start();
     }
 
     protected function tearDown(): void
     {
         // Response zurücksetzen nach jedem Test
         $this->response->reset();
+        
+        // Clean up output buffer after each test
+        if (ob_get_level()) {
+            ob_end_clean();
+        }
+        
+        // Reset headers if possible
+        if (!headers_sent()) {
+            header_remove();
+        }
         
         // Alle Output Buffer leeren
         while (ob_get_level()) {

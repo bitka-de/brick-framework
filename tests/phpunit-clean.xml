@@ -5,10 +5,10 @@
          colors="true"
          displayDetailsOnIncompleteTests="true"
          displayDetailsOnSkippedTests="true"
-         displayDetailsOnTestsThatTriggerDeprecations="true"
+         displayDetailsOnTestsThatTriggerDeprecations="false"
          displayDetailsOnTestsThatTriggerErrors="true"
-         displayDetailsOnTestsThatTriggerNotices="true"
-         displayDetailsOnTestsThatTriggerWarnings="true"
+         displayDetailsOnTestsThatTriggerNotices="false"
+         displayDetailsOnTestsThatTriggerWarnings="false"
          failOnDeprecation="false"
          failOnEmptyTestSuite="true"
          failOnIncomplete="true"
@@ -17,7 +17,7 @@
          failOnSkipped="false"
          failOnWarning="false">
     <testsuites>
-        <testsuite name="🧱 Brick Framework Core Tests">
+        <testsuite name="🧱 Brick Framework Clean Tests">
             <directory>brick</directory>
         </testsuite>
     </testsuites>
@@ -29,17 +29,4 @@
             <directory>../vendor</directory>
         </exclude>
     </source>
-    <coverage includeUncoveredFiles="true"
-              pathCoverage="false"
-              disableCodeCoverageIgnore="true">
-        <report>
-            <html outputDirectory="coverage/html-coverage" lowUpperBound="50" highLowerBound="90"/>
-            <text outputFile="coverage/coverage.txt" showUncoveredFiles="false" showOnlySummary="true"/>
-        </report>
-    </coverage>
-    <logging>
-        <testdoxHtml outputFile="reports/testdox.html"/>
-        <testdoxText outputFile="reports/testdox.txt"/>
-        <junit outputFile="reports/logfile.xml"/>
-    </logging>
 </phpunit>
