@@ -5,7 +5,7 @@
     "patterns": [
         {
             "name": "brick.directive",
-            "match": "@(extends|section|endsection|yield|include|if|elseif|else|endif|foreach|endforeach|for|endfor|while|endwhile|php|endphp)\\b",
+            "match": "@(extends|section|endsection|yield|include|if|elseif|else|endif|foreach|endforeach|for|endfor|while|endwhile|php|endphp|css|endcss|js|endjs)\\b",
             "captures": {
                 "1": {
                     "name": "keyword.control.brick"

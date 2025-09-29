@@ -154,5 +154,37 @@
             "@endif"
         ],
         "description": "Brick debug information block"
+    },
+    "Brick CSS External": {
+        "prefix": "@css",
+        "body": [
+            "@css('${1:styles.css}')"
+        ],
+        "description": "Include external CSS file"
+    },
+    "Brick CSS Inline": {
+        "prefix": "@cssinline",
+        "body": [
+            "@css",
+            "\t${1:/* CSS styles here */}",
+            "@endcss"
+        ],
+        "description": "Add inline CSS styles"
+    },
+    "Brick JS External": {
+        "prefix": "@js",
+        "body": [
+            "@js('${1:script.js}'${2:, ['${3:defer}']})"
+        ],
+        "description": "Include external JavaScript file"
+    },
+    "Brick JS Inline": {
+        "prefix": "@jsinline",
+        "body": [
+            "@js",
+            "\t${1:// JavaScript code here}",
+            "@endjs"
+        ],
+        "description": "Add inline JavaScript code"
     }
 }
