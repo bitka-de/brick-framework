@@ -13,6 +13,8 @@
     <!-- Custom Styles -->
     @yield('styles')
     
+    <!-- Dynamically injected CSS will appear here -->
+    
     <style>
         .navbar-brand {
             font-weight: bold;

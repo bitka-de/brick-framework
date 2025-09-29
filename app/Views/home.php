@@ -41,6 +41,7 @@
                     Blade-ähnlichen Templates und einem intuitiven Routing-System.
                 </p>
                 <a href="#features" class="btn btn-light btn-lg me-3">Features entdecken</a>
+                <a href="/demo/css-js" class="btn btn-success btn-lg me-3">✨ CSS & JS Demo</a>
                 <a href="/docs" class="btn btn-outline-light btn-lg">Dokumentation</a>
             </div>
         </div>
