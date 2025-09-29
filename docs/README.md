@@ -9,6 +9,11 @@ Willkommen zur umfassenden Dokumentation des Brick Frameworks!
 - [Installationsanleitung](#installation) – Framework installieren
 - [Schnellstart](#quick-start) – In wenigen Minuten loslegen
 
+### 🎨 **View-System**
+- [View-System Übersicht](VIEW_SYSTEM.md) – Vollständige Template-Engine Dokumentation
+- [Blade-ähnliche Direktiven](#view-directives) – Template-Syntax und Features
+- [Layout-System](#layouts) – Master-Templates und Komponenten
+
 ### 🧪 **Tests & Qualität**
 - [Testübersicht](TEST_SUITE_OVERVIEW.md) – Vollständige Testdokumentation
 - [Tests ausführen](#running-tests) – Tests ausführen und verstehen
@@ -26,6 +31,8 @@ Willkommen zur umfassenden Dokumentation des Brick Frameworks!
 ```
 docs/
 ├── README.md                      # Diese Datei – Dokumentationsindex
+├── brick.md                       # Umfassender Framework-Einstieg für Entwickler
+├── VIEW_SYSTEM.md                 # Vollständige View-System Dokumentation
 ├── TEST_SUITE_OVERVIEW.md         # Vollständige Testdokumentation
 ├── ROUTER_ENHANCEMENT_SUMMARY.md  # Router-Verbesserungen & Features
 └── [Weitere Dokumentationsdateien]
