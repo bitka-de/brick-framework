@@ -53,13 +53,18 @@ coverage.xml
 .env.production
 
 # IDE & Editor Konfigurationen
-.vscode/
 .idea/
 *.sublime-project
 *.sublime-workspace
 .project
 .settings/
 .buildpath
+
+# VS Code - Behalte Projekt-Konfiguration, ignoriere User-Settings
+!.vscode/
+.vscode/launch.json
+.vscode/tasks.json
+.vscode/*.log
 
 # Vim
 *.swp
