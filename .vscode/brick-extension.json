@@ -1,0 +1,25 @@
+{
+    "contributes": {
+        "languages": [
+            {
+                "id": "brick-template",
+                "aliases": ["Brick Template", "brick"],
+                "extensions": [".php"],
+                "configuration": "./brick-template-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "brick-template",
+                "scopeName": "text.html.php.brick",
+                "path": "./brick-template.tmLanguage.json"
+            }
+        ],
+        "snippets": [
+            {
+                "language": "php",
+                "path": "./brick-snippets.json"
+            }
+        ]
+    }
+}

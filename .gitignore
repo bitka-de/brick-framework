@@ -1,0 +1,267 @@
+# 🧱 Brick Framework - Git Ignore Configuration
+# Generated on 28. September 2025 for macOS environment
+
+# ═══════════════════════════════════════════════════════════
+# 📦 DEPENDENCY MANAGEMENT
+# ═══════════════════════════════════════════════════════════
+
+# Composer
+/vendor/
+composer.lock
+composer.phar
+
+# Node.js (falls du Frontend-Tools nutzt)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# ═══════════════════════════════════════════════════════════
+# 🧪 TESTING & CACHING  
+# ═══════════════════════════════════════════════════════════
+
+# PHPUnit
+.phpunit.result.cache
+/tests/reports/
+/tests/coverage/
+
+# Test Coverage
+clover.xml
+coverage.xml
+*.coverage
+
+# Cache Verzeichnisse
+/cache/
+/storage/cache/
+/storage/logs/
+/storage/sessions/
+/storage/views/
+/storage/framework/
+
+
+# ═══════════════════════════════════════════════════════════
+# 🔧 DEVELOPMENT ENVIRONMENT
+# ═══════════════════════════════════════════════════════════
+
+# Environment Configuration
+.env
+.env.local
+.env.*.local
+.env.testing
+.env.production
+
+# IDE & Editor Konfigurationen
+.idea/
+*.sublime-project
+*.sublime-workspace
+.project
+.settings/
+.buildpath
+
+# VS Code - Behalte Projekt-Konfiguration, ignoriere User-Settings
+!.vscode/
+.vscode/launch.json
+.vscode/tasks.json
+.vscode/*.log
+
+# Vim
+*.swp
+*.swo
+*~
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# ═══════════════════════════════════════════════════════════
+# 🍎 macOS SPEZIFISCH
+# ═══════════════════════════════════════════════════════════
+
+# macOS System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# macOS Finder
+.localized
+.fseventsd
+.DocumentRevisions-V100
+.TemporaryItems
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# ═══════════════════════════════════════════════════════════
+# 🐳 CONTAINERIZATION & VIRTUALIZATION
+# ═══════════════════════════════════════════════════════════
+
+# Docker
+Dockerfile.local
+docker-compose.override.yml
+.dockerignore
+
+# Vagrant
+.vagrant/
+
+# ═══════════════════════════════════════════════════════════
+# 📊 LOGS & RUNTIME
+# ═══════════════════════════════════════════════════════════
+
+# Application Logs
+*.log
+logs/
+storage/logs/
+laravel.log
+
+# Runtime Files
+*.pid
+*.sock
+*.tmp
+
+# Error Logs
+error_log
+php_errors.log
+
+# ═══════════════════════════════════════════════════════════
+# 🔐 SECURITY & CREDENTIALS  
+# ═══════════════════════════════════════════════════════════
+
+# Private Keys & Certificates
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# SSH Keys
+id_rsa
+id_dsa
+id_ecdsa
+id_ed25519
+
+# GPG
+secring.*
+
+# ═══════════════════════════════════════════════════════════
+# 🏗️ BUILD & DEPLOYMENT
+# ═══════════════════════════════════════════════════════════
+
+# Build Outputs
+/build/
+/dist/
+/public/build/
+/public/storage/
+
+# Asset Compilation
+/public/css/
+/public/js/
+/public/mix-manifest.json
+
+# Compiled Templates
+/storage/framework/views/
+/bootstrap/cache/
+
+# ═══════════════════════════════════════════════════════════
+# 🧰 DEVELOPMENT TOOLS
+# ═══════════════════════════════════════════════════════════
+
+# Backup Files
+*.bak
+*.backup
+*.old
+*.orig
+
+# Temporary Files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Archive Files
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Debug Files
+*.debug
+*.trace
+
+# ═══════════════════════════════════════════════════════════
+# 📱 FRAMEWORK SPECIFIC (Brick)
+# ═══════════════════════════════════════════════════════════
+
+# Brick Framework Cache
+/brick/cache/
+/brick/logs/
+
+# User Generated Content
+/uploads/
+/files/
+/media/
+
+# ═══════════════════════════════════════════════════════════
+# 🌐 WEB SERVER
+# ═══════════════════════════════════════════════════════════
+
+# Apache
+.htaccess.backup
+.htpasswd
+
+# Nginx  
+nginx.conf.backup
+
+# Server Logs
+access.log
+error.log
+
+# ═══════════════════════════════════════════════════════════
+# 🔍 MONITORING & PROFILING
+# ═══════════════════════════════════════════════════════════
+
+# Profiling
+*.prof
+*.pprof
+/storage/profiling/
+
+# Monitoring
+newrelic.ini
+
+# ═══════════════════════════════════════════════════════════
+# 📝 DOCUMENTATION
+# ═══════════════════════════════════════════════════════════
+
+# Generated Documentation
+/docs/api/
+/docs/build/
+.phpdoc/
+
+# ═══════════════════════════════════════════════════════════
+# 🚀 EXCEPTIONS (Was NICHT ignoriert werden soll)
+# ═══════════════════════════════════════════════════════════
+
+# Keep diese wichtigen Dateien
+!.gitkeep
+!.htaccess
+!web.config
+
+# Ignore CLI Tools completely
+cli/
+
+# Keep Framework Core
+!brick/
+!brick/**
+
+# Keep Tests (aber nicht Reports)
+!tests/
+!tests/**
+tests/reports/
+tests/coverage/
+tests/.phpunit.result.cache

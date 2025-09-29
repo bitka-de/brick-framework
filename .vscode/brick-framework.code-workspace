@@ -1,0 +1,156 @@
+{
+    "folders": [
+        {
+            "name": "🧱 Brick Framework",
+            "path": "."
+        }
+    ],
+    "settings": {
+        // PHP-Validierung für Template-Verzeichnis deaktivieren
+        "php.validate.enable": false,
+        
+        // Intelephense-Konfiguration für Templates
+        "intelephense.files.exclude": [
+            "**/.git/**",
+            "**/.svn/**",
+            "**/.hg/**",
+            "**/CVS/**",
+            "**/.DS_Store/**",
+            "**/node_modules/**",
+            "**/bower_components/**",
+            "**/vendor/**/{Tests,tests,Test,test}/**"
+        ],
+        
+        // Spezielle Behandlung für app/Views/
+        "files.associations": {
+            "app/Views/**/*.php": "php",
+            "*.brick.php": "php"
+        },
+        
+        // Problem-Filterung
+        "problems.showCurrentInStatus": true,
+        
+        // Editor-Einstellungen für Templates
+        "[php]": {
+            "editor.insertSpaces": true,
+            "editor.tabSize": 4,
+            "editor.autoIndent": "full",
+            "editor.formatOnSave": false,
+            "editor.quickSuggestions": {
+                "other": true,
+                "comments": false,
+                "strings": true
+            }
+        },
+        
+        // Emmet für HTML in PHP-Templates
+        "emmet.includeLanguages": {
+            "php": "html"
+        },
+        
+        // Syntax-Highlighting für Brick-Direktiven
+        "editor.tokenColorCustomizations": {
+            "textMateRules": [
+                {
+                    "name": "Brick Directive",
+                    "scope": "keyword.control.brick",
+                    "settings": {
+                        "foreground": "#C586C0",
+                        "fontStyle": "bold"
+                    }
+                },
+                {
+                    "name": "Brick Output Escaped",
+                    "scope": "brick.output.escaped",
+                    "settings": {
+                        "foreground": "#9CDCFE"
+                    }
+                },
+                {
+                    "name": "Brick Output Unescaped",
+                    "scope": "brick.output.unescaped", 
+                    "settings": {
+                        "foreground": "#FFD700"
+                    }
+                }
+            ]
+        }
+    },
+    "extensions": {
+        "recommendations": [
+            "bmewburn.vscode-intelephense-client",
+            "formulahendry.auto-rename-tag",
+            "bradlc.vscode-tailwindcss",
+            "ms-vscode.vscode-json"
+        ],
+        "unwantedRecommendations": [
+            "felixfbecker.php-intellisense",
+            "devsense.phptools-vscode"
+        ]
+    },
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "label": "🧪 Run Brick Tests",
+                "type": "shell",
+                "command": "php",
+                "args": ["tests/brick-test-runner.php"],
+                "group": {
+                    "kind": "test",
+                    "isDefault": true
+                },
+                "presentation": {
+                    "echo": true,
+                    "reveal": "always",
+                    "focus": false,
+                    "panel": "shared",
+                    "showReuseMessage": true,
+                    "clear": false
+                },
+                "problemMatcher": []
+            },
+            {
+                "label": "🧪 Run Detailed Tests",
+                "type": "shell",
+                "command": "php",
+                "args": ["tests/brick-test-runner.php", "--details"],
+                "group": "test",
+                "presentation": {
+                    "echo": true,
+                    "reveal": "always",
+                    "focus": false,
+                    "panel": "shared"
+                }
+            },
+            {
+                "label": "🎨 Test View System",
+                "type": "shell",
+                "command": "php",
+                "args": ["tests/view-test.php"],
+                "group": "test",
+                "presentation": {
+                    "echo": true,
+                    "reveal": "always",
+                    "focus": false,
+                    "panel": "shared"
+                }
+            },
+            {
+                "label": "🚀 Start Development Server",
+                "type": "shell",
+                "command": "php",
+                "args": ["-S", "localhost:8080", "-t", "public/"],
+                "group": "build",
+                "isBackground": true,
+                "presentation": {
+                    "echo": true,
+                    "reveal": "always",
+                    "focus": false,
+                    "panel": "shared"
+                },
+                "problemMatcher": []
+            }
+        ]
+    }
+}

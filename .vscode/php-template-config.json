@@ -1,0 +1,36 @@
+{
+    "php.problems.exclude": {
+        "**/app/Views/**/*.php": [
+            "PHP0413",
+            "PHP0415", 
+            "PHP0417",
+            "PHP0418",
+            "PHP0419",
+            "PHP0420",
+            "PHP0030",
+            "PHP0001",
+            "PHP0002",
+            "PHP0003",
+            "PHP0004"
+        ]
+    },
+    
+    "intelephense.diagnostics.enable": false,
+    "intelephense.completion.insertUseDeclaration": false,
+    "intelephense.completion.fullyQualifyGlobalConstantsAndFunctions": false,
+    
+    "files.exclude": {
+        "**/.git": true,
+        "**/.DS_Store": true,
+        "**/node_modules": true,
+        "**/vendor/bin": true,
+        "**/vendor/composer": true
+    },
+    
+    "editor.wordBasedSuggestions": false,
+    "editor.parameterHints.enabled": false,
+    "editor.hover.enabled": true,
+    
+    "problems.decorations.enabled": false,
+    "editor.renderValidationDecorations": "off"
+}

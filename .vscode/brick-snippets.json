@@ -1,0 +1,190 @@
+{
+    "Brick Extend Layout": {
+        "prefix": "@extends",
+        "body": [
+            "@extends('$1')",
+            "",
+            "@section('content')",
+            "\t$0",
+            "@endsection"
+        ],
+        "description": "Extend a Brick layout template"
+    },
+    "Brick Section": {
+        "prefix": "@section",
+        "body": [
+            "@section('$1')",
+            "\t$0",
+            "@endsection"
+        ],
+        "description": "Create a Brick template section"
+    },
+    "Brick Yield": {
+        "prefix": "@yield",
+        "body": [
+            "@yield('$1'${2:, '$3'})"
+        ],
+        "description": "Yield a Brick template section"
+    },
+    "Brick Include": {
+        "prefix": "@include",
+        "body": [
+            "@include('$1'${2:, [${3:'key' => 'value'}]})"
+        ],
+        "description": "Include a Brick template"
+    },
+    "Brick If Statement": {
+        "prefix": "@if",
+        "body": [
+            "@if($1)",
+            "\t$0",
+            "@endif"
+        ],
+        "description": "Brick if statement"
+    },
+    "Brick If-Else Statement": {
+        "prefix": "@ifelse",
+        "body": [
+            "@if($1)",
+            "\t$2",
+            "@else",
+            "\t$0",
+            "@endif"
+        ],
+        "description": "Brick if-else statement"
+    },
+    "Brick Foreach Loop": {
+        "prefix": "@foreach",
+        "body": [
+            "@foreach($1 as $2)",
+            "\t$0",
+            "@endforeach"
+        ],
+        "description": "Brick foreach loop"
+    },
+    "Brick Escaped Output": {
+        "prefix": "{{",
+        "body": [
+            "{{ $1 }}"
+        ],
+        "description": "Brick escaped output"
+    },
+    "Brick Unescaped Output": {
+        "prefix": "{!!",
+        "body": [
+            "{!! $1 !!}"
+        ],
+        "description": "Brick unescaped output"
+    },
+    "Brick Component": {
+        "prefix": "@component",
+        "body": [
+            "@include('components.$1', [",
+            "\t'$2' => '$3',",
+            "\t$0",
+            "])"
+        ],
+        "description": "Include a Brick component"
+    },
+    "Brick Layout Template": {
+        "prefix": "brick-layout",
+        "body": [
+            "<!DOCTYPE html>",
+            "<html lang=\"de\">",
+            "<head>",
+            "\t<meta charset=\"UTF-8\">",
+            "\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+            "\t<title>@yield('title', '$1')</title>",
+            "\t@yield('styles')",
+            "</head>",
+            "<body>",
+            "\t<main>",
+            "\t\t@yield('content')",
+            "\t</main>",
+            "\t@yield('scripts')",
+            "</body>",
+            "</html>"
+        ],
+        "description": "Brick layout template structure"
+    },
+    "Brick Page Template": {
+        "prefix": "brick-page",
+        "body": [
+            "@extends('$1')",
+            "",
+            "@section('title', '$2')",
+            "",
+            "@section('content')",
+            "\t<h1>${3:Page Title}</h1>",
+            "\t$0",
+            "@endsection"
+        ],
+        "description": "Brick page template structure"
+    },
+    "Brick Alert Component": {
+        "prefix": "brick-alert",
+        "body": [
+            "@include('components.alert', [",
+            "\t'type' => '${1:info}',",
+            "\t'message' => '${2:Alert message}',",
+            "\t'dismissible' => ${3:true}",
+            "])"
+        ],
+        "description": "Brick alert component"
+    },
+    "Brick Card Component": {
+        "prefix": "brick-card",
+        "body": [
+            "@include('components.card', [",
+            "\t'title' => '${1:Card Title}',",
+            "\t'text' => '${2:Card content}',",
+            "\t'class' => '${3:}'",
+            "])"
+        ],
+        "description": "Brick card component"
+    },
+    "Brick Debug Block": {
+        "prefix": "@debug",
+        "body": [
+            "@if($debug ?? false)",
+            "\t<div class=\"debug-info\">",
+            "\t\t<h4>Debug Information</h4>",
+            "\t\t<pre>{{ json_encode(${1:get_defined_vars()}, JSON_PRETTY_PRINT) }}</pre>",
+            "\t</div>",
+            "@endif"
+        ],
+        "description": "Brick debug information block"
+    },
+    "Brick CSS External": {
+        "prefix": "@css",
+        "body": [
+            "@css('${1:styles.css}')"
+        ],
+        "description": "Include external CSS file"
+    },
+    "Brick CSS Inline": {
+        "prefix": "@cssinline",
+        "body": [
+            "@css",
+            "\t${1:/* CSS styles here */}",
+            "@endcss"
+        ],
+        "description": "Add inline CSS styles"
+    },
+    "Brick JS External": {
+        "prefix": "@js",
+        "body": [
+            "@js('${1:script.js}'${2:, ['${3:defer}']})"
+        ],
+        "description": "Include external JavaScript file"
+    },
+    "Brick JS Inline": {
+        "prefix": "@jsinline",
+        "body": [
+            "@js",
+            "\t${1:// JavaScript code here}",
+            "@endjs"
+        ],
+        "description": "Add inline JavaScript code"
+    }
+}

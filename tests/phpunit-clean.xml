@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.4/phpunit.xsd"
+         bootstrap="../vendor/autoload.php"
+         colors="true"
+         displayDetailsOnIncompleteTests="true"
+         displayDetailsOnSkippedTests="true"
+         displayDetailsOnTestsThatTriggerDeprecations="false"
+         displayDetailsOnTestsThatTriggerErrors="true"
+         displayDetailsOnTestsThatTriggerNotices="false"
+         displayDetailsOnTestsThatTriggerWarnings="false"
+         failOnDeprecation="false"
+         failOnEmptyTestSuite="true"
+         failOnIncomplete="true"
+         failOnNotice="false"
+         failOnRisky="false"
+         failOnSkipped="false"
+         failOnWarning="false">
+    <testsuites>
+        <testsuite name="🧱 Brick Framework Clean Tests">
+            <directory>brick</directory>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <directory>../brick</directory>
+        </include>
+        <exclude>
+            <directory>../vendor</directory>
+        </exclude>
+    </source>
+</phpunit>
