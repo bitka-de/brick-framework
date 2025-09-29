@@ -57,6 +57,18 @@ class View
     /** @var string|null Aktueller Layout-Name */
     private ?string $currentLayout = null;
     
+    /** @var array<string> Sammlung externer CSS-Dateien */
+    private array $cssFiles = [];
+    
+    /** @var array<string> Sammlung von Inline-CSS */
+    private array $inlineCss = [];
+    
+    /** @var array<array{file: string, attributes: array<string>}> Sammlung externer JS-Dateien mit Attributen */
+    private array $jsFiles = [];
+    
+    /** @var array<string> Sammlung von Inline-JavaScript */
+    private array $inlineJs = [];
+    
     /** @var bool Debug-Modus für detaillierte Fehlermeldungen */
     private bool $debug = false;
     
@@ -165,6 +177,9 @@ class View
         
         $this->stats['cache_misses']++;
         $this->stats['compiled_templates']++;
+        
+        // Assets für neue Kompilierung zurücksetzen
+        $this->resetAssets();
         
         // Template-Inhalt laden
         $content = file_get_contents($templatePath);
@@ -326,6 +341,64 @@ class View
             $content
         );
         
+        // 19. CSS Inline: @css ... @endcss
+        if (preg_match_all('/@css\s*\n(.*?)\n\s*@endcss/s', $content, $matches, PREG_SET_ORDER)) {
+            foreach ($matches as $match) {
+                $css = trim($match[1]);
+                $this->inlineCss[] = $css;
+                $content = str_replace($match[0], '', $content);
+            }
+        }
+        
+        // 20. CSS External: @css('file.css')
+        if (preg_match_all('/@css\s*\(\s*[\'"]([^\'"]+)[\'"]\s*\)/', $content, $matches, PREG_SET_ORDER)) {
+            foreach ($matches as $match) {
+                $file = $match[1];
+                if (!in_array($file, $this->cssFiles)) {
+                    $this->cssFiles[] = $file;
+                }
+                $content = str_replace($match[0], '', $content);
+            }
+        }
+        
+        // 21. JS Inline: @js ... @endjs
+        if (preg_match_all('/@js\s*\n(.*?)\n\s*@endjs/s', $content, $matches, PREG_SET_ORDER)) {
+            foreach ($matches as $match) {
+                $js = trim($match[1]);
+                $this->inlineJs[] = $js;
+                $content = str_replace($match[0], '', $content);
+            }
+        }
+        
+        // 22. JS External: @js('file.js') oder @js('file.js', ['defer', 'async'])
+        if (preg_match_all('/@js\s*\(\s*[\'"]([^\'"]+)[\'"](?:\s*,\s*\[([^\]]+)\])?\s*\)/', $content, $matches, PREG_SET_ORDER)) {
+            foreach ($matches as $match) {
+                $file = $match[1];
+                $attributes = [];
+                
+                if (isset($match[2])) {
+                    // Parse attributes like ['defer', 'async']
+                    $attrString = trim($match[2]);
+                    $attributes = array_map('trim', explode(',', str_replace(['\'', '"'], '', $attrString)));
+                }
+                
+                // Prüfen ob bereits vorhanden
+                $exists = false;
+                foreach ($this->jsFiles as $jsFile) {
+                    if ($jsFile['file'] === $file) {
+                        $exists = true;
+                        break;
+                    }
+                }
+                
+                if (!$exists) {
+                    $this->jsFiles[] = ['file' => $file, 'attributes' => $attributes];
+                }
+                
+                $content = str_replace($match[0], '', $content);
+            }
+        }
+        
         return $content;
     }
 
@@ -361,6 +434,9 @@ class View
                       "if (!isset(\$__view->sections['content'])) \$__view->sections['content'] = \$__templateContent; " .
                       "?>" . 
                       $compiledLayout;
+            
+            // CSS/JS Assets in Layout injizieren
+            $content = $this->injectAssets($content);
         }
         
         return $content;
@@ -597,6 +673,150 @@ class View
         return $templates;
     }
 
+    /**
+     * CSS/JS Assets in Layout injizieren
+     * 
+     * @param string $content Layout-Inhalt
+     * @return string Layout mit injizierten Assets
+     */
+    private function injectAssets(string $content): string
+    {
+        // CSS-Assets generieren
+        $cssContent = $this->generateCssContent();
+        $jsContent = $this->generateJsContent();
+        
+        // CSS vor dem schließenden </head> Tag einfügen
+        if (!empty($cssContent)) {
+            $content = str_replace('</head>', $cssContent . "\n</head>", $content);
+        }
+        
+        // JS vor dem schließenden </head> Tag einfügen (für bessere Performance)
+        if (!empty($jsContent)) {
+            $content = str_replace('</head>', $jsContent . "\n</head>", $content);
+        }
+        
+        return $content;
+    }
+    
+    /**
+     * CSS-Inhalt generieren
+     * 
+     * @return string
+     */
+    private function generateCssContent(): string
+    {
+        $output = [];
+        
+        // Externe CSS-Dateien
+        foreach ($this->cssFiles as $file) {
+            $output[] = "<link rel=\"stylesheet\" href=\"$file\">";
+        }
+        
+        // Inline CSS
+        if (!empty($this->inlineCss)) {
+            $output[] = "<style>";
+            $output[] = implode("\n", $this->inlineCss);
+            $output[] = "</style>";
+        }
+        
+        return implode("\n", $output);
+    }
+    
+    /**
+     * JavaScript-Inhalt generieren
+     * 
+     * @return string
+     */
+    private function generateJsContent(): string
+    {
+        $output = [];
+        
+        // Externe JS-Dateien
+        foreach ($this->jsFiles as $jsFile) {
+            $attributes = implode(' ', $jsFile['attributes']);
+            $attrString = !empty($attributes) ? " $attributes" : '';
+            $output[] = "<script src=\"{$jsFile['file']}\"{$attrString}></script>";
+        }
+        
+        // Inline JavaScript
+        if (!empty($this->inlineJs)) {
+            $output[] = "<script>";
+            $output[] = implode("\n", $this->inlineJs);
+            $output[] = "</script>";
+        }
+        
+        return implode("\n", $output);
+    }
+    
+    /**
+     * Assets zurücksetzen (für Template-Neukompilierung)
+     */
+    private function resetAssets(): void
+    {
+        $this->cssFiles = [];
+        $this->inlineCss = [];
+        $this->jsFiles = [];
+        $this->inlineJs = [];
+    }
+    
+    /**
+     * CSS-Datei manuell hinzufügen
+     * 
+     * @param string $file CSS-Datei-Pfad
+     * @return self
+     */
+    public function addCss(string $file): self
+    {
+        if (!in_array($file, $this->cssFiles)) {
+            $this->cssFiles[] = $file;
+        }
+        return $this;
+    }
+    
+    /**
+     * JavaScript-Datei manuell hinzufügen
+     * 
+     * @param string $file JS-Datei-Pfad
+     * @param array<string> $attributes Attribute wie ['defer', 'async']
+     * @return self
+     */
+    public function addJs(string $file, array $attributes = []): self
+    {
+        // Prüfen ob bereits vorhanden
+        foreach ($this->jsFiles as $jsFile) {
+            if ($jsFile['file'] === $file) {
+                return $this;
+            }
+        }
+        
+        $this->jsFiles[] = ['file' => $file, 'attributes' => $attributes];
+        return $this;
+    }
+    
+    /**
+     * Inline CSS hinzufügen
+     * 
+     * @param string $css CSS-Code
+     * @return self
+     */
+    public function addInlineCss(string $css): self
+    {
+        $this->inlineCss[] = $css;
+        return $this;
+    }
+    
+    /**
+     * Inline JavaScript hinzufügen
+     * 
+     * @param string $js JavaScript-Code
+     * @return self
+     */
+    public function addInlineJs(string $js): self
+    {
+        $this->inlineJs[] = $js;
+        return $this;
+    }
+    
     /**
      * Statische Factory-Methode
      * 
