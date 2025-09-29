@@ -11,10 +11,9 @@
  * @since 29.09.2025
  */
 
-use Brick\Core\Router;
-use Brick\Http\Request;
-use Brick\Http\Response;
-use App\Controllers\HomeController;
+use Brick\Core\{Router, View};
+use Brick\Http\{Request, Response};
+use App\Controllers\{HomeController, DocumentationController};
 
 /**
  * Routen registrieren
@@ -39,27 +38,20 @@ return function(Router $router, Request $request, Response $response): void {
     // Homepage - TEMPORÄR OHNE LAYOUT
     $router->get('/', function() use ($homeController, $request, $response) {
         // Temporärer Fix: Content direkt rendern ohne Layout-System
-        $view = new \Brick\Core\View(
+        $view = new View(
             viewPath: __DIR__ . '/Views',
             cachePath: sys_get_temp_dir() . '/brick_views',
             debug: true
         );
         
-        $stats = $view->getStats();
-        
-
-        $view = new \Brick\Core\View(
-            viewPath: __DIR__ . '/Views',
-            cachePath: sys_get_temp_dir() . '/brick_views',
-            debug: true
-        );
-        
-         $view->shareAll([
+        $view->shareAll([
             'appName' => $_ENV['APP_NAME'] ?? 'Brick Framework',
             'version' => '1.0.0',
             'debug' => $_ENV['APP_DEBUG'] ?? true,
             'currentYear' => date('Y')
         ]);
+
+        $stats = $view->getStats();
 
         return $response->html($view->render('home', [
             'stats' => $stats
@@ -68,7 +60,7 @@ return function(Router $router, Request $request, Response $response): void {
     
     // Über uns
     $router->get('/about', function() use ($response) {
-        $view = new \Brick\Core\View(
+        $view = new View(
             viewPath: __DIR__ . '/Views',
             cachePath: sys_get_temp_dir() . '/brick_views',
             debug: true
@@ -90,7 +82,7 @@ return function(Router $router, Request $request, Response $response): void {
     
     // Include Test Route (temporär)
     $router->get('/test/includes', function() use ($response) {
-        $view = new \Brick\Core\View(
+        $view = new View(
             viewPath: __DIR__ . '/Views',
             cachePath: sys_get_temp_dir() . '/brick_views',
             debug: true
@@ -148,6 +140,192 @@ return function(Router $router, Request $request, Response $response): void {
     // DEMO ROUTES - ENTWICKLUNG & TESTS
     // ============================================
     
+    // ============================
+    // Dokumentations-Routen
+    // ============================
+    
+    // Test-Route für Debugging
+    $router->get('/docs-test', function() use ($response) {
+        return $response->html('<h1>Test: Docs Route funktioniert!</h1>');
+    });
+    
+    // Dokumentations-Hauptseite
+    $router->get('/docs', function() use ($response) {
+        error_log('DOCS ROUTE HIT!');
+        try {
+            $controller = new DocumentationController();
+            $content = $controller->index();
+            
+            if (empty($content)) {
+                error_log('DOCS ROUTE: Empty content!');
+                return $response->html('<h1>ERROR: Empty content from controller</h1>');
+            }
+            
+            error_log('DOCS ROUTE: Content length: ' . strlen($content));
+            return $response->html($content);
+        } catch (Exception $e) {
+            error_log('DOCS ROUTE ERROR: ' . $e->getMessage());
+            return $response->html('<h1>ERROR: ' . $e->getMessage() . '</h1><pre>' . $e->getTraceAsString() . '</pre>');
+        }
+    });
+    
+    // Dokumentations-Unterseiten
+    $router->get('/docs/overview', function() use ($response) {
+        error_log('DOCS OVERVIEW ROUTE HIT!');
+        try {
+            $controller = new DocumentationController();
+            $content = $controller->overview();
+            
+            if (empty($content)) {
+                error_log('DOCS OVERVIEW: Empty content!');
+                return $response->html('<h1>ERROR: Empty content from overview controller</h1>');
+            }
+            
+            error_log('DOCS OVERVIEW: Content length: ' . strlen($content));
+            return $response->html($content);
+        } catch (Exception $e) {
+            error_log('DOCS OVERVIEW ERROR: ' . $e->getMessage());
+            return $response->html('<h1>ERROR: ' . $e->getMessage() . '</h1><pre>' . $e->getTraceAsString() . '</pre>');
+        }
+    });
+    
+    $router->get('/docs/installation', function() use ($response) {
+        error_log('DOCS INSTALLATION ROUTE HIT!');
+        try {
+            $controller = new DocumentationController();
+            $content = $controller->installation();
+            
+            if (empty($content)) {
+                error_log('DOCS INSTALLATION: Empty content!');
+                return $response->html('<h1>ERROR: Empty content from installation controller</h1>');
+            }
+            
+            error_log('DOCS INSTALLATION: Content length: ' . strlen($content));
+            return $response->html($content);
+        } catch (Exception $e) {
+            error_log('DOCS INSTALLATION ERROR: ' . $e->getMessage());
+            return $response->html('<h1>ERROR: ' . $e->getMessage() . '</h1><pre>' . $e->getTraceAsString() . '</pre>');
+        }
+    });
+    
+    $router->get('/docs/routing', function() use ($response) {
+        error_log('DOCS ROUTING ROUTE HIT!');
+        try {
+            $controller = new DocumentationController();
+            $content = $controller->routing();
+            
+            if (empty($content)) {
+                error_log('DOCS ROUTING: Empty content!');
+                return $response->html('<h1>ERROR: Empty content from routing controller</h1>');
+            }
+            
+            error_log('DOCS ROUTING: Content length: ' . strlen($content));
+            return $response->html($content);
+        } catch (Exception $e) {
+            error_log('DOCS ROUTING ERROR: ' . $e->getMessage());
+            return $response->html('<h1>ERROR: ' . $e->getMessage() . '</h1><pre>' . $e->getTraceAsString() . '</pre>');
+        }
+    });
+    
+    $router->get('/docs/views', function() use ($response) {
+        error_log('DOCS VIEWS ROUTE HIT!');
+        try {
+            $controller = new DocumentationController();
+            $content = $controller->views();
+            
+            if (empty($content)) {
+                error_log('DOCS VIEWS: Empty content!');
+                return $response->html('<h1>ERROR: Empty content from views controller</h1>');
+            }
+            
+            error_log('DOCS VIEWS: Content length: ' . strlen($content));
+            return $response->html($content);
+        } catch (Exception $e) {
+            error_log('DOCS VIEWS ERROR: ' . $e->getMessage());
+            return $response->html('<h1>ERROR: ' . $e->getMessage() . '</h1><pre>' . $e->getTraceAsString() . '</pre>');
+        }
+    });
+    
+    $router->get('/docs/css-js', function() use ($response) {
+        error_log('DOCS CSS-JS ROUTE HIT!');
+        try {
+            $controller = new DocumentationController();
+            $content = $controller->cssJs();
+            
+            if (empty($content)) {
+                error_log('DOCS CSS-JS: Empty content!');
+                return $response->html('<h1>ERROR: Empty content from cssJs controller</h1>');
+            }
+            
+            error_log('DOCS CSS-JS: Content length: ' . strlen($content));
+            return $response->html($content);
+        } catch (Exception $e) {
+            error_log('DOCS CSS-JS ERROR: ' . $e->getMessage());
+            return $response->html('<h1>ERROR: ' . $e->getMessage() . '</h1><pre>' . $e->getTraceAsString() . '</pre>');
+        }
+    });
+    
+    $router->get('/docs/middleware', function() use ($response) {
+        error_log('DOCS MIDDLEWARE ROUTE HIT!');
+        try {
+            $controller = new DocumentationController();
+            $content = $controller->middleware();
+            
+            if (empty($content)) {
+                error_log('DOCS MIDDLEWARE: Empty content!');
+                return $response->html('<h1>ERROR: Empty content from middleware controller</h1>');
+            }
+            
+            error_log('DOCS MIDDLEWARE: Content length: ' . strlen($content));
+            return $response->html($content);
+        } catch (Exception $e) {
+            error_log('DOCS MIDDLEWARE ERROR: ' . $e->getMessage());
+            return $response->html('<h1>ERROR: ' . $e->getMessage() . '</h1><pre>' . $e->getTraceAsString() . '</pre>');
+        }
+    });
+    
+    $router->get('/docs/database', function() use ($response) {
+        error_log('DOCS DATABASE ROUTE HIT!');
+        try {
+            $controller = new DocumentationController();
+            $content = $controller->database();
+            
+            if (empty($content)) {
+                error_log('DOCS DATABASE: Empty content!');
+                return $response->html('<h1>ERROR: Empty content from database controller</h1>');
+            }
+            
+            error_log('DOCS DATABASE: Content length: ' . strlen($content));
+            return $response->html($content);
+        } catch (Exception $e) {
+            error_log('DOCS DATABASE ERROR: ' . $e->getMessage());
+            return $response->html('<h1>ERROR: ' . $e->getMessage() . '</pre>');
+        }
+    });
+    
+    $router->get('/docs/api', function() use ($response) {
+        error_log('DOCS API ROUTE HIT!');
+        try {
+            $controller = new DocumentationController();
+            $content = $controller->api();
+            
+            if (empty($content)) {
+                error_log('DOCS API: Empty content!');
+                return $response->html('<h1>ERROR: Empty content from api controller</h1>');
+            }
+            
+            error_log('DOCS API: Content length: ' . strlen($content));
+            return $response->html($content);
+        } catch (Exception $e) {
+            error_log('DOCS API ERROR: ' . $e->getMessage());
+            return $response->html('<h1>ERROR: ' . $e->getMessage() . '</h1><pre>' . $e->getTraceAsString() . '</pre>');
+        }
+    });
+    
+    // ============================
+    // Test-Routen für CSS/JS
+    // ============================
+    
     // View-System Demo
     $router->get('/demo/templates', function() use ($homeController, $request) {
         // Demo-Template mit verschiedenen Features
@@ -156,7 +334,7 @@ return function(Router $router, Request $request, Response $response): void {
     
     // CSS Test Route
     $router->get('/test/css', function() use ($response) {
-        $view = new \Brick\Core\View(
+        $view = new View(
             viewPath: __DIR__ . '/Views',
             cachePath: sys_get_temp_dir() . '/brick_views',
             debug: true
@@ -172,7 +350,7 @@ return function(Router $router, Request $request, Response $response): void {
     
     // CSS Inline Test Route
     $router->get('/test/css-inline', function() use ($response) {
-        $view = new \Brick\Core\View(
+        $view = new View(
             viewPath: __DIR__ . '/Views',
             cachePath: sys_get_temp_dir() . '/brick_views',
             debug: true
@@ -188,7 +366,7 @@ return function(Router $router, Request $request, Response $response): void {
     
     // JavaScript Test Route
     $router->get('/test/js', function() use ($response) {
-        $view = new \Brick\Core\View(
+        $view = new View(
             viewPath: __DIR__ . '/Views',
             cachePath: sys_get_temp_dir() . '/brick_views',
             debug: true
@@ -204,7 +382,7 @@ return function(Router $router, Request $request, Response $response): void {
     
     // CSS & JavaScript Direktiven Demo
     $router->get('/demo/css-js', function() use ($response) {
-        $view = new \Brick\Core\View(
+        $view = new View(
             viewPath: __DIR__ . '/Views',
             cachePath: sys_get_temp_dir() . '/brick_views',
             debug: true
