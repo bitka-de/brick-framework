@@ -154,6 +154,75 @@ return function(Router $router, Request $request, Response $response): void {
         return $homeController->demo($request);
     });
     
+    // CSS Test Route
+    $router->get('/test/css', function() use ($response) {
+        $view = new \Brick\Core\View(
+            viewPath: __DIR__ . '/Views',
+            cachePath: sys_get_temp_dir() . '/brick_views',
+            debug: true
+        );
+        
+        $view->shareAll([
+            'app_name' => 'Brick Framework',
+            'version' => '1.0.0'
+        ]);
+        
+        echo $view->render('css-test', [], true);
+    });
+    
+    // CSS Inline Test Route
+    $router->get('/test/css-inline', function() use ($response) {
+        $view = new \Brick\Core\View(
+            viewPath: __DIR__ . '/Views',
+            cachePath: sys_get_temp_dir() . '/brick_views',
+            debug: true
+        );
+        
+        $view->shareAll([
+            'app_name' => 'Brick Framework',
+            'version' => '1.0.0'
+        ]);
+        
+        echo $view->render('css-inline-test', [], true);
+    });
+    
+    // JavaScript Test Route
+    $router->get('/test/js', function() use ($response) {
+        $view = new \Brick\Core\View(
+            viewPath: __DIR__ . '/Views',
+            cachePath: sys_get_temp_dir() . '/brick_views',
+            debug: true
+        );
+        
+        $view->shareAll([
+            'app_name' => 'Brick Framework',
+            'version' => '1.0.0'
+        ]);
+        
+        echo $view->render('js-test', [], true);
+    });
+    
+    // CSS & JavaScript Direktiven Demo
+    $router->get('/demo/css-js', function() use ($response) {
+        $view = new \Brick\Core\View(
+            viewPath: __DIR__ . '/Views',
+            cachePath: sys_get_temp_dir() . '/brick_views',
+            debug: true
+        );
+        
+        $view->shareAll([
+            'appName' => $_ENV['APP_NAME'] ?? 'Brick Framework',
+            'version' => '1.0.0',
+            'debug' => $_ENV['APP_DEBUG'] ?? true,
+            'currentYear' => date('Y')
+        ]);
+
+        return $response->html($view->render('css-js-demo', [
+            'title' => 'CSS & JavaScript Demo',
+            'showDemo' => true
+        ]));
+    });
+    
     // Router-Debug (nur in Entwicklung)
     $router->get('/debug/routes', function() use ($router, $response) {
         if (!($_ENV['APP_DEBUG'] ?? true)) {
