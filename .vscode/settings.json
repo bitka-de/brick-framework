@@ -1,0 +1,64 @@
+{
+    "php.validate.executablePath": "",
+    "php.validate.enable": false,
+    "files.associations": {
+        "*.php": "php"
+    },
+    "emmet.includeLanguages": {
+        "php": "html"
+    },
+    "php.suggest.basic": true,
+    "intelephense.files.associations": [
+        "*.php"
+    ],
+    "intelephense.diagnostics.enable": true,
+    "intelephense.diagnostics.run": "onType",
+    "intelephense.diagnostics.deprecated": false,
+    "intelephense.diagnostics.undefinedConstants": false,
+    "intelephense.diagnostics.undefinedFunctions": false,
+    "intelephense.diagnostics.undefinedMethods": false,
+    "intelephense.diagnostics.undefinedProperties": false,
+    "intelephense.diagnostics.undefinedTypes": false,
+    "intelephense.diagnostics.undefinedVariables": false,
+    "intelephense.diagnostics.unusedSymbols": false,
+    "intelephense.diagnostics.typeErrors": false,
+    
+    // Spezielle Konfiguration für View-Templates
+    "[php]": {
+        "editor.quickSuggestions": {
+            "other": true,
+            "comments": false,
+            "strings": true
+        },
+        "editor.suggest.snippetsPreventQuickSuggestions": false
+    },
+    
+    // Dateien in app/Views/ anders behandeln
+    "files.exclude": {},
+    "search.exclude": {},
+    
+    // Spezifische Einstellungen für Template-Dateien
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {
+                "scope": "source.php",
+                "settings": {
+                    "foreground": "#569CD6"
+                }
+            }
+        ]
+    },
+    
+    // Problem-Matcher für Brick Framework
+    "problemMatchers": [],
+    
+    // Extension-spezifische Einstellungen
+    "phpcs.enable": false,
+    "phpmd.enabled": false,
+    "php-cs-fixer.enable": false,
+    
+    // Auto-Formatierung deaktivieren für Templates
+    "editor.formatOnSave": false,
+    "editor.formatOnType": false,
+    "editor.formatOnPaste": false
+}

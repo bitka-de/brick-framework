@@ -1,0 +1,40 @@
+{
+    "name": "Brick Framework Template",
+    "scopeName": "text.html.php.brick",
+    "fileTypes": ["php"],
+    "patterns": [
+        {
+            "name": "brick.directive",
+            "match": "@(extends|section|endsection|yield|include|if|elseif|else|endif|foreach|endforeach|for|endfor|while|endwhile|php|endphp)\\b",
+            "captures": {
+                "1": {
+                    "name": "keyword.control.brick"
+                }
+            }
+        },
+        {
+            "name": "brick.output.escaped",
+            "match": "\\{\\{\\s*(.+?)\\s*\\}\\}",
+            "captures": {
+                "1": {
+                    "name": "source.php.embedded"
+                }
+            }
+        },
+        {
+            "name": "brick.output.unescaped", 
+            "match": "\\{!!\\s*(.+?)\\s*!!\\}",
+            "captures": {
+                "1": {
+                    "name": "source.php.embedded"
+                }
+            }
+        },
+        {
+            "include": "text.html.basic"
+        },
+        {
+            "include": "source.php"
+        }
+    ]
+}
