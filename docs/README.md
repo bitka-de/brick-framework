@@ -11,6 +11,7 @@ Willkommen zur umfassenden Dokumentation des Brick Frameworks!
 
 ### 🎨 **View-System**
 - [View-System Übersicht](VIEW_SYSTEM.md) – Vollständige Template-Engine Dokumentation
+- [CSS & JS Direktiven](CSS_JS_DIRECTIVES.md) – Asset-Management mit automatischer Header-Injektion
 - [Blade-ähnliche Direktiven](#view-directives) – Template-Syntax und Features
 - [Layout-System](#layouts) – Master-Templates und Komponenten
 
